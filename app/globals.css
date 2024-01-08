@@ -36,3 +36,10 @@ button,
 .car-5 {
   background: rgba(255, 255, 0, 0.879);
 }
+
+
+.ping {
+  fill: rgba(228, 45, 39, 0.816);
+  stroke: #000;
+  stroke-width: .5px;
+}

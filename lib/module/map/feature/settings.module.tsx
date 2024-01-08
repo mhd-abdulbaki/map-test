@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 // #Third-Party
-import L from "leaflet";
+import L, { map } from "leaflet";
 import { useMap } from "react-leaflet";
 
 // ##UI
@@ -16,7 +16,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import "leaflet.markercluster/dist/leaflet.markercluster.js";
 import "leaflet.markercluster.freezable/dist/leaflet.markercluster.freezable.js";
 import "leaflet-rotatedmarker";
-// import "@asymmetrik/leaflet-d3";
+import "@asymmetrik/leaflet-d3";
+import * as d3 from "d3";
 
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
@@ -40,6 +41,7 @@ export const SettingsModule = () => {
 
   // #Component-State
   const [isFreeze, setIsFreeze] = useState(false);
+  const [playPing, setPlayPing] = useState(true);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const open = Boolean(anchorEl);
@@ -64,6 +66,28 @@ export const SettingsModule = () => {
     }
   }, [map]);
 
+  useEffect(() => {
+    if (map) {
+      const pingLayer = L.pingLayer({
+        fps: 60,
+        duration: 500,
+        radiusRange: [3, 15],
+      }).addTo(map);
+
+      if (playPing) {
+        let pingInterval = setInterval(() => {
+          CarsCoordinates.forEach(({ lat, lng }) => {
+            pingLayer.ping([lat, lng]);
+          });
+        }, 500);
+
+        return () => {
+          clearInterval(pingInterval);
+        };
+      }
+    }
+  }, [map, playPing]);
+
   // #Handlers
   const clickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (anchorEl) {
@@ -86,6 +110,10 @@ export const SettingsModule = () => {
       //@ts-ignore
       mcg.freezeAtZoom("max");
     }
+  };
+
+  const disablePingHandler = () => {
+    setPlayPing((prev) => !prev);
   };
 
   return (
@@ -120,8 +148,9 @@ export const SettingsModule = () => {
             onChange={disableClusteringHandler}
           />
           <FormControlLabel
-            control={<GeneralSwitch />}
+            control={<GeneralSwitch defaultChecked />}
             label="Markers Ping Angle"
+            onChange={disablePingHandler}
           />
         </FormGroup>
       </Menu>
