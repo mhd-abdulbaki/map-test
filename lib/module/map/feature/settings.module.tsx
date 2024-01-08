@@ -5,9 +5,9 @@ import { useEffect, useState } from "react";
 // #Third-Party
 import L from "leaflet";
 import { useMap } from "react-leaflet";
+
 // ##UI
-import Tooltip from "@mui/material/Tooltip";
-import { FormControlLabel, FormGroup, Menu, Switch } from "@mui/material";
+import { FormControlLabel, FormGroup, Menu } from "@mui/material";
 // ##Icon
 import SettingsIcon from "@mui/icons-material/Settings";
 
@@ -23,40 +23,15 @@ import "leaflet.markercluster/dist/MarkerCluster.css";
 
 // #Dev
 // ##Shared-UI
-import { CircularButton } from "@/lib/shared";
+import { CircularButton, GeneralSwitch } from "@/lib/shared";
+
+//#Utils
+//#Constant
+import { CarsCoordinates } from "../utils/constant/cars-coordinates.const";
 
 // #Init Marker Cluster Group
 const mcg = L.markerClusterGroup({
   chunkedLoading: true,
-});
-
-const markers = [
-  {
-    lat: 59.319789,
-    lng: 18.074736,
-    text: "Hello, I am pop 1",
-  },
-  {
-    lat: 59.318789,
-    lng: 18.074736,
-    text: "Hello, I am pop 2",
-  },
-
-  {
-    lat: 59.317789,
-    lng: 18.075736,
-  },
-  {
-    lat: 59.319789,
-    lng: 18.076736,
-    text: "Hello, I am pop 3",
-  },
-];
-
-const customIcon = new L.Icon({
-  iconUrl: "/car.png",
-  iconSize: [38, 38],
-  className: "car-shadow car-angle",
 });
 
 export const SettingsModule = () => {
@@ -73,12 +48,17 @@ export const SettingsModule = () => {
   useEffect(() => {
     if (map) {
       mcg.clearLayers();
-      markers.forEach(({ lat, lng }) => {
+      CarsCoordinates.forEach(({ lat, lng, angle, color }) => {
         L.marker(new L.LatLng(lat, lng), {
-          icon: customIcon,
-          rotationAngle: 170,
+          icon: new L.Icon({
+            iconUrl: "/car.png",
+            iconSize: [38, 38],
+            className: `car ${color}`,
+          }),
+          rotationAngle: angle,
           riseOnHover: true,
         }).addTo(mcg);
+        // L.circleMarker(new L.LatLng(lat, lng), { color: "yellow" }).addTo(map);
       });
       map.addLayer(mcg);
     }
@@ -106,17 +86,17 @@ export const SettingsModule = () => {
 
   return (
     <div>
-      <Tooltip title="Settings">
-        <CircularButton
-          id="basic-button"
-          aria-haspopup="true"
-          onClick={clickHandler}
-          aria-controls={open ? "fade-menu" : undefined}
-          aria-expanded={open ? "true" : undefined}
-        >
-          <SettingsIcon sx={{ fontSize: "1.8rem" }} />
-        </CircularButton>
-      </Tooltip>
+      <CircularButton
+        tooltip="Settings"
+        id="basic-button"
+        aria-haspopup="true"
+        onClick={clickHandler}
+        aria-controls={open ? "fade-menu" : undefined}
+        aria-expanded={open ? "true" : undefined}
+      >
+        <SettingsIcon sx={{ fontSize: "1.8rem" }} />
+      </CircularButton>
+
       <Menu
         open={open}
         id="basic-menu"
@@ -131,11 +111,14 @@ export const SettingsModule = () => {
       >
         <FormGroup sx={{ px: "20px" }}>
           <FormControlLabel
-            control={<Switch defaultChecked />}
+            control={<GeneralSwitch defaultChecked />}
             label="Markers Grouping"
             onChange={disableClusteringHandler}
           />
-          <FormControlLabel control={<Switch />} label="Markers Ping Angle" />
+          <FormControlLabel
+            control={<GeneralSwitch />}
+            label="Markers Ping Angle"
+          />
         </FormGroup>
       </Menu>
     </div>

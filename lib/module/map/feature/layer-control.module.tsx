@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 
 // #Third-Party
@@ -8,7 +7,6 @@ import { useMapEvents } from "react-leaflet";
 
 // ##UI
 import { Box, Menu } from "@mui/material";
-import Tooltip from "@mui/material/Tooltip";
 // ##Icon
 import LayersIcon from "@mui/icons-material/Layers";
 
@@ -16,9 +14,11 @@ import LayersIcon from "@mui/icons-material/Layers";
 // ##UI
 import { CircularButton } from "@/lib/shared";
 import { LayerCard } from "../ui/layer-card.component";
+// ##Type
+import { LayerType } from "@/types/types";
 
 // #Utils
-import { mapProviders } from "../utils/map-providers.util";
+import { MapProviders } from "../utils/constant/map-providers.const";
 
 export const LayerControlModule = () => {
   // #Init
@@ -32,13 +32,16 @@ export const LayerControlModule = () => {
 
   // #Handlers
   // ##Change Layer Handler
-  const onLayerSelectHandler = (layer: L.Layer, name: string) => {
+  const onLayerSelectHandler = (layer: LayerType, name: string) => {
+    const newLayer = L.tileLayer(layer.url, {
+      attribution: layer.attribution,
+    });
     setActive(name);
-    if (mapEvents?.hasLayer(layer)) {
-      mapEvents.removeLayer(layer);
-      mapEvents.addLayer(layer);
+    if (mapEvents?.hasLayer(newLayer)) {
+      mapEvents.removeLayer(newLayer);
+      mapEvents.addLayer(newLayer);
     } else {
-      mapEvents.addLayer(layer);
+      mapEvents.addLayer(newLayer);
     }
   };
 
@@ -52,17 +55,17 @@ export const LayerControlModule = () => {
 
   return (
     <>
-      <Tooltip title="Change Map">
-        <CircularButton
-          id="basic-button"
-          aria-haspopup="true"
-          onClick={clickHandler}
-          aria-controls={open ? "layer" : undefined}
-          aria-expanded={open ? "true" : undefined}
-        >
-          <LayersIcon sx={{ fontSize: "1.8rem" }} />
-        </CircularButton>
-      </Tooltip>
+      <CircularButton
+        tooltip="Change Map"
+        id="basic-button"
+        aria-haspopup="true"
+        onClick={clickHandler}
+        aria-controls={open ? "layer" : undefined}
+        aria-expanded={open ? "true" : undefined}
+      >
+        <LayersIcon sx={{ fontSize: "1.8rem" }} />
+      </CircularButton>
+
       <Menu
         id="layer"
         open={open}
@@ -79,7 +82,7 @@ export const LayerControlModule = () => {
             alignItems: "start",
           }}
         >
-          {mapProviders.map((map) => (
+          {MapProviders.map((map) => (
             <LayerCard
               key={map.image}
               active={active}

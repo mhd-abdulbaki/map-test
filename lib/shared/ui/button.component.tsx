@@ -1,7 +1,9 @@
-import { styled } from "@mui/material/styles";
-import { Button } from "@mui/material";
+import { ReactNode } from "react";
 
-export const GeneralButton = styled(Button)(() => ({
+import { styled } from "@mui/material/styles";
+import { Button, Tooltip } from "@mui/material";
+
+const StykedButton = styled(Button)(() => ({
   height: "40px",
   minWidth: "20px",
   color: "#424649",
@@ -15,8 +17,48 @@ export const GeneralButton = styled(Button)(() => ({
   },
 }));
 
-export const CircularButton = styled(GeneralButton)(() => ({
+const StyldeCircularButton = styled(StykedButton)(() => ({
   width: "40px",
   height: "40px",
   borderRadius: "100%",
 }));
+
+interface IProps {
+  children: ReactNode;
+  sx?: {} | undefined;
+  id?: string | undefined;
+  tooltip?: string | undefined;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void | undefined;
+}
+
+export const GeneralButton = ({
+  children,
+  tooltip,
+  sx,
+  id,
+  onClick,
+}: IProps) => {
+  return (
+    <Tooltip title={tooltip}>
+      <StykedButton id={id} sx={{ ...sx }} onClick={onClick}>
+        {children}
+      </StykedButton>
+    </Tooltip>
+  );
+};
+
+export const CircularButton = ({
+  children,
+  tooltip,
+  sx,
+  id,
+  onClick,
+}: IProps) => {
+  return (
+    <Tooltip title={tooltip}>
+      <StyldeCircularButton id={id} sx={{ ...sx }} onClick={onClick}>
+        {children}
+      </StyldeCircularButton>
+    </Tooltip>
+  );
+};

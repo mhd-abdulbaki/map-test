@@ -6,9 +6,6 @@ import React from "react";
 import { useMap } from "react-leaflet";
 import { ButtonGroup } from "@mui/material";
 
-//##UI
-import Tooltip from "@mui/material/Tooltip";
-
 // ##Icons
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import ZoomOutIcon from "@mui/icons-material/ZoomOut";
@@ -31,23 +28,21 @@ export const ZoomControlModule = () => {
 
   return (
     <ButtonGroup variant="text" aria-label="text button group">
-      <Tooltip title="Zoom In">
-        <GeneralButton
-          onClick={zoomInHandler}
-          sx={{ borderRadius: "400px 0px 0px 400px" }}
-        >
-          <ZoomInIcon sx={{ fontSize: "1.8rem" }} />
-        </GeneralButton>
-      </Tooltip>
+      <GeneralButton
+        tooltip="Zoom In"
+        onClick={zoomInHandler}
+        sx={{ borderRadius: "400px 0px 0px 400px" }}
+      >
+        <ZoomInIcon sx={{ fontSize: "1.8rem" }} />
+      </GeneralButton>
 
-      <Tooltip title="Zoom Out">
-        <GeneralButton
-          onClick={zoomOutHandler}
-          sx={{ borderRadius: " 0px 400px 400px 0px" }}
-        >
-          <ZoomOutIcon sx={{ fontSize: "1.8rem" }} />
-        </GeneralButton>
-      </Tooltip>
+      <GeneralButton
+        tooltip="Zoom Out"
+        onClick={zoomOutHandler}
+        sx={{ borderRadius: " 0px 400px 400px 0px" }}
+      >
+        <ZoomOutIcon sx={{ fontSize: "1.8rem" }} />
+      </GeneralButton>
     </ButtonGroup>
   );
 };
