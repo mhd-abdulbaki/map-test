@@ -1,4 +1,13 @@
-# Map Test has been built using Next.js, Leaflet and MUI
+# Map Test Has Been Built Using Next.js, Leaflet and MUI
+
+## The Project Has The Following Features
+
+1.  Zoom In / Zoom Out Functionality
+2.  Multiple Map Layers: Google Maps, Google Map Satellite, Open Street Map
+3.  Setting button enabling "grouping" and "ping" functionalities
+4.  Grouping functionality
+5.  Ping functionality
+6.  Fullscreen button for toggling fullscreen mode
 
 ## Live Demo
 
