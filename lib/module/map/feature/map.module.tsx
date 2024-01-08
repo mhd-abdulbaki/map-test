@@ -7,7 +7,7 @@ import { LatLngExpression } from "leaflet";
 
 const MapContainer = dynamic(
   () => import("react-leaflet").then((module) => module.MapContainer),
-  { ssr: false, loading: () => <p>Loading...</p> }
+  { ssr: false, loading: () => <MapSkeleton /> }
 );
 const TileLayer = dynamic(
   () => import("react-leaflet").then((module) => module.TileLayer),
@@ -38,6 +38,7 @@ const LayerControlModule = dynamic(
 
 // ##UI
 import { ControlWrapper } from "../ui/control-wrapper.component";
+import { MapSkeleton } from "../ui/map-skeleton.component";
 
 // ##Shared-UI
 import {
