@@ -47,7 +47,11 @@ export const LayerControlModule = () => {
 
   // ##Menu Handlers
   const clickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+    if (anchorEl) {
+      closeHandler();
+    } else {
+      setAnchorEl(event.currentTarget);
+    }
   };
   const closeHandler = () => {
     setAnchorEl(null);
@@ -57,7 +61,7 @@ export const LayerControlModule = () => {
     <>
       <CircularButton
         tooltip="Change Map"
-        id="basic-button"
+        id="change-map-button"
         aria-haspopup="true"
         onClick={clickHandler}
         aria-controls={open ? "layer" : undefined}
@@ -67,7 +71,7 @@ export const LayerControlModule = () => {
       </CircularButton>
 
       <Menu
-        id="layer"
+        id="change-map-menu"
         open={open}
         anchorEl={anchorEl}
         onClose={closeHandler}

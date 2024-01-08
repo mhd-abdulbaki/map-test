@@ -13,8 +13,6 @@ const TileLayer = dynamic(
   () => import("react-leaflet").then((module) => module.TileLayer),
   { ssr: false }
 );
-// ##UI
-import Tooltip from "@mui/material/Tooltip";
 
 // ##Icons
 import FullscreenIcon from "@mui/icons-material/Fullscreen";

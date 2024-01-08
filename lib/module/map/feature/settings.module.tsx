@@ -12,11 +12,11 @@ import { FormControlLabel, FormGroup, Menu } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 
 // ##Leaflet-Plugin
+
 import "leaflet.markercluster/dist/leaflet.markercluster.js";
 import "leaflet.markercluster.freezable/dist/leaflet.markercluster.freezable.js";
 import "leaflet-rotatedmarker";
-
-import "@asymmetrik/leaflet-d3/dist/leaflet-d3.js";
+// import "@asymmetrik/leaflet-d3";
 
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
@@ -48,6 +48,7 @@ export const SettingsModule = () => {
   useEffect(() => {
     if (map) {
       mcg.clearLayers();
+
       CarsCoordinates.forEach(({ lat, lng, angle, color }) => {
         L.marker(new L.LatLng(lat, lng), {
           icon: new L.Icon({
@@ -58,7 +59,6 @@ export const SettingsModule = () => {
           rotationAngle: angle,
           riseOnHover: true,
         }).addTo(mcg);
-        // L.circleMarker(new L.LatLng(lat, lng), { color: "yellow" }).addTo(map);
       });
       map.addLayer(mcg);
     }
@@ -66,7 +66,11 @@ export const SettingsModule = () => {
 
   // #Handlers
   const clickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+    if (anchorEl) {
+      closeHandler();
+    } else {
+      setAnchorEl(event.currentTarget);
+    }
   };
   const closeHandler = () => {
     setAnchorEl(null);
@@ -88,7 +92,7 @@ export const SettingsModule = () => {
     <div>
       <CircularButton
         tooltip="Settings"
-        id="basic-button"
+        id="settings-button"
         aria-haspopup="true"
         onClick={clickHandler}
         aria-controls={open ? "fade-menu" : undefined}
@@ -99,7 +103,7 @@ export const SettingsModule = () => {
 
       <Menu
         open={open}
-        id="basic-menu"
+        id="settings-menu"
         anchorEl={anchorEl}
         onClose={closeHandler}
         MenuListProps={{

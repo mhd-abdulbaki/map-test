@@ -20,6 +20,12 @@ dependencies:
   '@mui/material':
     specifier: ^5.15.3
     version: 5.15.3(@emotion/react@11.11.3)(@emotion/styled@11.11.0)(@types/react@18.2.47)(react-dom@18.2.0)(react@18.2.0)
+  d3:
+    specifier: ^7.8.5
+    version: 7.8.5
+  d3-hexbin:
+    specifier: ^0.2.2
+    version: 0.2.2
   leaflet:
     specifier: ^1.9.4
     version: 1.9.4
@@ -47,6 +53,9 @@ dependencies:
   react-leaflet-cluster:
     specifier: ^2.1.0
     version: 2.1.0(leaflet@1.9.4)(react-dom@18.2.0)(react-leaflet@4.2.1)(react@18.2.0)
+  react-leaflet-d3:
+    specifier: ^2.0.0
+    version: 2.0.0(d3-hexbin@0.2.2)(d3@7.8.5)(leaflet@1.9.4)(react-leaflet@4.2.1)
 
 devDependencies:
   '@types/leaflet':
@@ -111,6 +120,18 @@ packages:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.20
+
+  /@asymmetrik/leaflet-d3@4.4.1(d3-hexbin@0.2.2)(d3@7.8.5)(leaflet@1.9.4):
+    resolution: {integrity: sha512-Bkg5+KHNuByiCeb4BHshOmKV6duG20CAZ+jJwX27hdSaBlkEYHAca7GNed/YffBl6SbhWeXCndjkdBT0SXYr/A==}
+    peerDependencies:
+      d3: '5'
+      d3-hexbin: '0.2'
+      leaflet: '1'
+    dependencies:
+      d3: 7.8.5
+      d3-hexbin: 0.2.2
+      leaflet: 1.9.4
+    dev: false
 
   /@asymmetrik/leaflet-d3@6.0.1(d3-hexbin@0.2.2)(d3@7.8.5)(leaflet@1.9.4):
     resolution: {integrity: sha512-sZEsX5jzXTi9TKwnY/b/g1P+T44ZDJZtA2jZAQUq2+f65C25RSN6ZDd5BtKYzV6rJ7E8qIwisUwWki6YEkFb8g==}
@@ -3462,6 +3483,21 @@ packages:
       leaflet.markercluster: 1.5.3(leaflet@1.9.4)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+      react-leaflet: 4.2.1(leaflet@1.9.4)(react-dom@18.2.0)(react@18.2.0)
+    dev: false
+
+  /react-leaflet-d3@2.0.0(d3-hexbin@0.2.2)(d3@7.8.5)(leaflet@1.9.4)(react-leaflet@4.2.1):
+    resolution: {integrity: sha512-PgV0V98zoFQGGRB7SYiPSfAOo8eyL8XpP1PjrrGBGAEKkajYO+9S3MGLBu00cD+v8GvYVLrW6omROlwAAY9fFQ==}
+    peerDependencies:
+      d3: ^5
+      d3-hexbin: ^0.2.2
+      leaflet: ^1.3.4
+      react-leaflet: ^1.9.1 || ^2.1.4
+    dependencies:
+      '@asymmetrik/leaflet-d3': 4.4.1(d3-hexbin@0.2.2)(d3@7.8.5)(leaflet@1.9.4)
+      d3: 7.8.5
+      d3-hexbin: 0.2.2
+      leaflet: 1.9.4
       react-leaflet: 4.2.1(leaflet@1.9.4)(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
